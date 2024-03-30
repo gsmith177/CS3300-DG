@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from datetime import datetime, date
 
 class User(models.Model):
     name = models.CharField("name",max_length=200)
@@ -11,7 +12,7 @@ class User(models.Model):
     ('Beginner' , 'Average score over par')
     )
     skill_level = models.CharField(max_length=200, choices=SKILL_LEVEL, blank = False)
-    date_joined = models.DateField(db_comment ="Date when this User joined")
+    date_joined = models.DateField(("Date"), default=date.today)
 
     #Define default String to return the name for representing the Model object."
     def __str__(self):
@@ -25,5 +26,15 @@ class User(models.Model):
     
 class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    date = models.DateTimeField(db_comment = "Date and time when post was made")
+    date = models.DateTimeField(auto_now=True)
     location = models.CharField(max_length=200)
+
+    #Define default String to return the name for representing the Model object."
+    def __str__(self):
+        return self.title
+    
+    #Returns the URL to access a particular instance of MyModelName.
+    #if you define this method then Django will automatically
+    # add a "View on Site" button to the model's record editing screens in the Admin site
+    def get_absolute_url(self):
+        return reverse('portfoilio-detail', args=[str(self.id)])
