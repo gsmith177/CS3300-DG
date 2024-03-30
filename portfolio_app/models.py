@@ -1,7 +1,6 @@
 from django.db import models
 from django.urls import reverse
 
-
 class User(models.Model):
     name = models.CharField("name",max_length=200)
     email = models.CharField(max_length=200)
@@ -12,7 +11,7 @@ class User(models.Model):
     ('Beginner' , 'Average score over par')
     )
     skill_level = models.CharField(max_length=200, choices=SKILL_LEVEL, blank = False)
-    date_joined = models.CharField(max_length=200)
+    date_joined = models.DateField(db_comment ="Date when this User joined")
 
     #Define default String to return the name for representing the Model object."
     def __str__(self):
@@ -26,6 +25,5 @@ class User(models.Model):
     
 class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    date = models.CharField(max_length=200)
-    time = models.CharField(max_length=200)
+    date = models.DateTimeField(db_comment = "Date and time when post was made")
     location = models.CharField(max_length=200)
