@@ -1,4 +1,5 @@
 from django.urls import path
+from django.contrib import admin
 from . import views
 
 
@@ -9,4 +10,7 @@ urlpatterns = [
 # name='index' parameter is to dynamically create url
 # example in html <a href="{% url 'index' %}">Home</a>.
 path('', views.index, name='index'),
+path('', views.index, name='login'),
+path('admin/', admin.site.urls),
+
 ]

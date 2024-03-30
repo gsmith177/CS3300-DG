@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
+import os
 
 from pathlib import Path
 
@@ -20,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-18yr%gd!z*xlr9)jr&_=&u5))vdk7xgq3!=tdkukb5x55&x3f('
+SECRET_KEY = 'django-insecure-^a1inem)!h$o&ll$p6eqiwhse64(!n@+!dg((s65u1)giycnb5'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -31,19 +32,21 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-# ...
-'django.contrib.auth',
-'django.contrib.contenttypes',
-'django.contrib.sessions',
-'django.contrib.messages',
-'Django.contrib.staticfiles',
-'DG-portfolio_app', 
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    #Added app(s):
+    'portfolio_app',
+    #'django_bootstrap5',
 ]
 
+# Add support for authenticating users
 AUTHENTICATION_BACKENDS = [
 'django.contrib.auth.backends.ModelBackend',
 ]
-
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -122,6 +125,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static')
+]
+
+MEDIA_URL = '/images/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
