@@ -3,5 +3,5 @@ This web app is designed as a social media for disc golf players. It is designed
 ## Documentation:
 
 ## Kanban Board:
-###Sprint 01:
+### Sprint 01:
 https://github.com/users/gsmith177/projects/2
