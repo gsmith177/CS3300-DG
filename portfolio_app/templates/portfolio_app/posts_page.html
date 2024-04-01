@@ -1,0 +1,13 @@
+<!-- inherit from base.html-->
+{% extends "portfolio_app/base_template.html" %}
+
+<!-- Replace block content in base_template.html -->
+{% block content %}
+<p>Here you can view all posts from other users join posts to sign up to play, or create posts for others to join</p>
+<h1>All posts</h1>
+<ul class="list-group">
+    {% for i in Post %}
+        <li class="list-group-item">{{ i.name }}
+    {% endfor %}
+</ul>
+{% endblock %}

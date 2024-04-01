@@ -22,12 +22,13 @@ class User(models.Model):
     #if you define this method then Django will automatically
     # add a "View on Site" button to the model's record editing screens in the Admin site
     def get_absolute_url(self):
-        return reverse('portfoilio-detail', args=[str(self.id)])
+        return reverse('User-detail', args=[str(self.id)])
     
 class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now=True)
     location = models.CharField(max_length=200)
+    num_joined = models.CharField(max_length=200) #add a max of 8 and a min of 1
 
     #Define default String to return the name for representing the Model object."
     def __str__(self):
@@ -37,4 +38,4 @@ class Post(models.Model):
     #if you define this method then Django will automatically
     # add a "View on Site" button to the model's record editing screens in the Admin site
     def get_absolute_url(self):
-        return reverse('portfoilio-detail', args=[str(self.id)])
+        return reverse('Posts', args=[str(self.id)])
