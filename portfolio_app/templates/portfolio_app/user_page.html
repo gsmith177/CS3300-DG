@@ -1,13 +1,9 @@
-<!-- inherit from base.html-->
 {% extends "portfolio_app/base_template.html" %}
-
-
-<!-- Replace block content in base_template.html -->
 {% block content %}
 <h1>Users</h1>
-    <ul class="list-group">
-        {% for i in User %}
-            <li class="lit-group-item">{{i.name}}</li>
-        {% endfor %}
-    </ul>
+<ul class="list-group">
+    {% for user in users %}
+        <li class="list-group-item">{{ user.name }}</li>
+    {% endfor %}
+</ul>
 {% endblock %}

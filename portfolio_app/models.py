@@ -25,10 +25,10 @@ class User(models.Model):
         return reverse('User-detail', args=[str(self.id)])
     
 class Post(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     date = models.DateTimeField(auto_now=True)
     location = models.CharField(max_length=200)
-    num_joined = models.CharField(max_length=200) #add a max of 8 and a min of 1
+    num_joined = models.IntegerField(default=0)
 
     #Define default String to return the name for representing the Model object."
     def __str__(self):

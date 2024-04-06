@@ -1,0 +1,10 @@
+{% extends "portfolio_app/base_template.html" %}
+{% block content %}
+<h1>Delete Post</h1>
+<p>Are you sure you want to delete the post at "{{ post.location }}"?</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <a href="{% url 'posts_page' %}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

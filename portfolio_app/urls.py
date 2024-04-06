@@ -12,6 +12,13 @@ urlpatterns = [
 path('', views.index, name='index'),
 path('', views.index, name='login'),
 path('admin/', admin.site.urls),
-path('post/', views.PostsView.as_view(), name='PostsView'),
-path('post_detail/<int:pk>/', views.post_detail, name='PostDetail'),
+# Pages
+path('posts/', views.posts_page, name='posts_page'),
+path('post_detail/<int:pk>/', views.post_detail, name='post_detail'),
+path('users/', views.user_page, name='user_page'),
+# Forms
+path('post/create/', views.create_post, name='create_post'),
+path('post/update/<int:pk>/', views.update_post, name='update_post'),
+path('post/delete/<int:pk>/', views.delete_post, name='delete_post'),
+path('post/join/<int:pk>/', views.join_post, name='join_post'),
 ]
