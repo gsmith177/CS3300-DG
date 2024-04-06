@@ -7,9 +7,9 @@ class User(models.Model):
     email = models.CharField(max_length=200)
     is_active = models.BooleanField()
     SKILL_LEVEL = (
-    ('Professional' , 'Average score under par')
-    ('Intermediate' , 'Average score on par')
-    ('Beginner' , 'Average score over par')
+    ('Professional' , 'Average score under par'),
+    ('Intermediate' , 'Average score on par'),
+    ('Beginner' , 'Average score over par'),
     )
     skill_level = models.CharField(max_length=200, choices=SKILL_LEVEL, blank = False)
     date_joined = models.DateField(("Date"), default=date.today)

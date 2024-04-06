@@ -13,5 +13,5 @@ path('', views.index, name='index'),
 path('', views.index, name='login'),
 path('admin/', admin.site.urls),
 path('post/<int:pk>/', views.PostsView.as_view(), name='PostsView'),
-path('portfolio/<int:pk>/', views.PortfolioDetailView.as_view(), name='PortfolioDetailView'),
+path('post_detail/<int:pk>/', views.post_detail, name='PostDetail'),
 ]
