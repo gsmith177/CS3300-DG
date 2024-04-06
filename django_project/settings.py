@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     #Added app(s):
     'portfolio_app',
-    'django_bootstrap5',
+    # 'django_bootstrap5',
 ]
 
 # Add support for authenticating users
