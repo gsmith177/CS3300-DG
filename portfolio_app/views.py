@@ -2,6 +2,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import DetailView
 from django.http import HttpResponse
 from django.views import generic
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.forms import UserCreationForm
 from .models import *
 from .forms import *
 
@@ -71,3 +73,32 @@ def join_post(request, pk):
     post.num_joined += 1
     post.save()
     return redirect('posts_page')
+
+def user_login(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            password = form.cleaned_data['password']
+            user = authenticate(request, email=email, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('index')  # Redirect to the homepage after successful login
+    else:
+        form = LoginForm()
+    return render(request, 'portfolio_app/login.html', {'form': form})
+
+def user_logout(request):
+    logout(request)
+    return redirect('index')
+
+def create_user(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            # Redirect to a specific URL after creating the user (you can change 'index' to whatever page you want)
+            return redirect('index')
+    else:
+        form = UserCreationForm()
+    return render(request, 'portfolio_app/create_account.html', {'form': form})
