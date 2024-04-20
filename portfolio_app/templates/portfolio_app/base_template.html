@@ -16,7 +16,6 @@
     <div class="container-fluid">
 
 
-      <!-- Navbar-->
       <nav class="navbar navbar-expand-lg bg-body-tertiary">       
         <img src="{% static 'images/uccs_logo.gif' %}">
         <div class="container-fluid">
@@ -31,8 +30,8 @@
                     <a class="nav-link" href="{% url 'logout' %}?next={{ request.path }}">Logout {{ user }}</a>
                 {% else %}
                     <a class="nav-link" href="{% url 'login' %}?next={{ request.path }}">Login</a>
+                    <a class="nav-link" href="{% url 'register_page' %}">Create Account</a>
                 {% endif %}
-                <a class="nav-link" href="{% url 'create_user' %}">Create Account</a> <!-- Add this line for creating account -->
             </div>
         </div>
         </div>

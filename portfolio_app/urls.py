@@ -1,6 +1,8 @@
 from django.urls import path
 from django.contrib import admin
 from . import views
+from django.contrib.auth import views as auth_views
+
 
 
 urlpatterns = [
@@ -22,6 +24,8 @@ path('post/update/<int:pk>/', views.update_post, name='update_post'),
 path('post/delete/<int:pk>/', views.delete_post, name='delete_post'),
 path('post/join/<int:pk>/', views.join_post, name='join_post'),
 path('login/', views.user_login, name='login'),
+# User Registration
 path('logout/', views.user_logout, name='logout'),
-path('create_user/', views.create_user, name='create_user'),
+path('password_reset/', auth_views.PasswordResetView.as_view(), name='password_reset'),
+path('register/', views.register_page, name='register_page'),
 ]

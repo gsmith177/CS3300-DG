@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.views import generic
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib import messages
 from .models import *
 from .forms import *
 
@@ -84,21 +85,27 @@ def user_login(request):
             if user is not None:
                 login(request, user)
                 return redirect('index')  # Redirect to the homepage after successful login
+            else:
+                messages.error(request, 'Invalid username or password')
     else:
         form = LoginForm()
+    
     return render(request, 'portfolio_app/login.html', {'form': form})
+
+def register_page(request):
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            messages.success(request, 'Account created successfully. You can now login.')
+            return redirect('index')  # Redirect to the homepage after successful registration
+    else:
+        form = CustomUserCreationForm()
+    
+    return render(request, 'portfolio_app/register.html', {'form': form})
+
 
 def user_logout(request):
     logout(request)
     return redirect('index')
-
-def create_user(request):
-    if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            # Redirect to a specific URL after creating the user (you can change 'index' to whatever page you want)
-            return redirect('index')
-    else:
-        form = UserCreationForm()
-    return render(request, 'portfolio_app/create_account.html', {'form': form})
