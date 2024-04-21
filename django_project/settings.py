@@ -45,6 +45,7 @@ INSTALLED_APPS = [
 # Add support for authenticating users
 AUTHENTICATION_BACKENDS = [
 'django.contrib.auth.backends.ModelBackend',
+'portfolio_app.backends.EmailBackend',  # Backend for email instead of username
 ]
 
 MIDDLEWARE = [

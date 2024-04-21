@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import DetailView
 from django.http import HttpResponse
 from django.views import generic
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
@@ -42,8 +43,14 @@ def create_post(request):
     if request.method == 'POST':
         form = PostForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('posts_page')
+            if request.user.is_authenticated:
+                post = form.save(commit=False)
+                post.user = request.user
+                post.save()
+                return redirect('posts_page')
+            else:
+                # Handle the case where a non-authenticated user submits the form
+                return redirect('login')  # Redirect to the login page
     else:
         form = PostForm()
     return render(request, 'portfolio_app/create_post.html', {'form': form})
@@ -96,7 +103,9 @@ def register_page(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            user = form.save()
+            user = form.save(commit=False)
+            user.backend = 'django.contrib.auth.backends.ModelBackend'  # Specify the authentication backend
+            user.save()
             login(request, user)
             messages.success(request, 'Account created successfully. You can now login.')
             return redirect('index')  # Redirect to the homepage after successful registration
