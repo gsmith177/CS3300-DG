@@ -90,8 +90,8 @@ def user_login(request):
             password = form.cleaned_data['password']
             user = authenticate(request, email=email, password=password)
             if user is not None:
-                login(request, user)
-                return redirect('index')  # Redirect to the homepage after successful login
+                login(request, user)  # Log in the user
+                return redirect('index')  # Redirect to the desired page after successful login
             else:
                 messages.error(request, 'Invalid username or password')
     else:
@@ -108,7 +108,7 @@ def register_page(request):
             user.save()
             login(request, user)
             messages.success(request, 'Account created successfully. You can now login.')
-            return redirect('index')  # Redirect to the homepage after successful registration
+            return redirect('login')  # Redirect to login after successful registration
     else:
         form = CustomUserCreationForm()
     

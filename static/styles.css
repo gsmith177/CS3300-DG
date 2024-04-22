@@ -1,0 +1,32 @@
+/* Body background color and text color */
+body {
+    background-color: #26282b;
+    color: white;
+}
+
+/* Navbar background color and text color */
+.custom-navbar {
+    background-color: #CB6919;
+    color: black; /* Change text color to black */
+}
+.navbar img {
+    width: 50px; /* Adjust width as needed */
+    height: auto; /* Maintain aspect ratio */
+}
+
+.custom-container {
+    background-color: #1b1c1e;
+    color: white;
+}
+
+.custom-primary-btn {
+    background-color: #CB6919;
+}
+
+.custom-success-btn {
+    background-color: #087413;
+}
+
+.custom-danger-btn {
+    background-color: #BB1F1F;
+}
