@@ -26,14 +26,20 @@ class ModelTestCase(TestCase):
         self.assertEqual(self.post2.num_joined, 0)
 
 class FormTestCase(TestCase):
-    def test_custom_user_creation_form(self):
+    # Form Tests
+    def test_custom_user_creation_form_valid(self):
         form_data = {
             'name': 'Test User',
             'email': 'test@example.com',
             'skill_level': 'Beginner',
+            'password1': 'testpassword123',
+            'password2': 'testpassword123', 
         }
         form = CustomUserCreationForm(data=form_data)
+        if not form.is_valid():
+            print(form.errors)
         self.assertTrue(form.is_valid())
+
 
     def test_post_form(self):
         form_data = {
@@ -44,6 +50,7 @@ class FormTestCase(TestCase):
         self.assertTrue(form.is_valid())
 
 class ViewTestCase(TestCase):
+    # View Tests
     def test_index_view(self):
         response = self.client.get(reverse('index'))
         self.assertEqual(response.status_code, 200)
@@ -53,5 +60,52 @@ class ViewTestCase(TestCase):
         response = self.client.get(reverse('posts_page'))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'portfolio_app/posts_page.html')
+
+    def test_post_detail_view(self):
+        # Create a test post
+        test_user = User.objects.create(email='test@example.com', name='Test User', skill_level='Professional')
+        test_post = Post.objects.create(user=test_user, location='Test Location', num_joined=0)
+
+        # Get the URL for the test post detail page
+        url = reverse('post_detail', args=[test_post.pk])
+
+        # Send GET request to the post detail page
+        response = self.client.get(url)
+
+        # Check if the response status code is 200 (OK)
+        self.assertEqual(response.status_code, 200)
+
+        # Check if the correct template is used
+        self.assertTemplateUsed(response, 'portfolio_app/post_details.html')
+
+        # Check if the post object is passed to the template context
+        self.assertEqual(response.context['post'], test_post)
+
+    # URL Tests
+    def test_index_url(self):
+        url = reverse('index')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'portfolio_app/index.html')
+
+    def test_posts_page_url(self):
+        url = reverse('posts_page')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'portfolio_app/posts_page.html')
+
+    def test_post_detail_url(self):
+        test_user = User.objects.create(email='test@example.com', name='Test User', skill_level='Professional')
+        test_post = Post.objects.create(user=test_user, location='Test Location', num_joined=0)
+        url = reverse('post_detail', args=[test_post.pk])
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'portfolio_app/post_details.html')
+
+    def test_user_page_url(self):
+        url = reverse('user_page')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'portfolio_app/user_page.html')
 
     # Add more view tests as needed

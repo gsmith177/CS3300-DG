@@ -6,6 +6,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
+from django.test import TestCase
+from django.urls import reverse
 from .models import *
 from .forms import *
 
@@ -114,7 +116,7 @@ def register_page(request):
     
     return render(request, 'portfolio_app/register.html', {'form': form})
 
-
 def user_logout(request):
     logout(request)
     return redirect('index')
+
