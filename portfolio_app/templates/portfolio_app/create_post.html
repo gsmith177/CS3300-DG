@@ -3,13 +3,9 @@
 {% block content %}
 <h1>Create Post</h1>
 
-{% if user.is_authenticated %}
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Create</button>
-    </form>
-{% else %}
-    <p>Please <a href="{% url 'login' %}?next={% url 'create_post' %}">login</a> to create a post.</p>
-{% endif %}
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Create</button>
+</form>
 {% endblock %}
