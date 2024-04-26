@@ -10,12 +10,14 @@ from django.test import TestCase
 from django.urls import reverse
 from .models import *
 from .forms import *
+from django.shortcuts import render
+from django.conf import settings
+import googlemaps
+import os
 
 # Index view
 def index(request):
-    # Render index.html
     return render(request, 'portfolio_app/index.html')
-
 # View to display all posts
 def posts_page(request):
     # Fetch all posts along with related user information
@@ -84,6 +86,7 @@ def join_post(request, pk):
     post.save()
     return redirect('posts_page')
 
+# View to handle user login
 def user_login(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
@@ -101,6 +104,7 @@ def user_login(request):
     
     return render(request, 'portfolio_app/login.html', {'form': form})
 
+# View to handle user registration
 def register_page(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
@@ -116,7 +120,7 @@ def register_page(request):
     
     return render(request, 'portfolio_app/register.html', {'form': form})
 
+# View to handle user logout
 def user_logout(request):
     logout(request)
     return redirect('index')
-
