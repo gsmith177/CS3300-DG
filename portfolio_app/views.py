@@ -91,12 +91,12 @@ def user_login(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
-            email = form.cleaned_data['email']
+            username = form.cleaned_data['username']
             password = form.cleaned_data['password']
-            user = authenticate(request, email=email, password=password)
+            user = authenticate(request, username=username, password=password)
             if user is not None:
-                login(request, user)  # Log in the user
-                return redirect('index')  # Redirect to the desired page after successful login
+                login(request, user)
+                return redirect('index')
             else:
                 messages.error(request, 'Invalid username or password')
     else:
@@ -104,19 +104,18 @@ def user_login(request):
     
     return render(request, 'portfolio_app/login.html', {'form': form})
 
+
 # View to handle user registration
 def register_page(request):
     if request.method == 'POST':
-        form = CustomUserCreationForm(request.POST)
+        form = UserCreationForm(request.POST)
         if form.is_valid():
-            user = form.save(commit=False)
-            user.backend = 'django.contrib.auth.backends.ModelBackend'  # Specify the authentication backend
-            user.save()
+            user = form.save()
             login(request, user)
             messages.success(request, 'Account created successfully. You can now login.')
-            return redirect('login')  # Redirect to login after successful registration
+            return redirect('login')
     else:
-        form = CustomUserCreationForm()
+        form = UserCreationForm()
     
     return render(request, 'portfolio_app/register.html', {'form': form})
 

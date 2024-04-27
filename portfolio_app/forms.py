@@ -8,13 +8,5 @@ class PostForm(forms.ModelForm):
         fields = ['location', 'num_joined'] 
 
 class LoginForm(forms.Form):
-    email = forms.EmailField()
+    username = forms.CharField()
     password = forms.CharField(widget=forms.PasswordInput)
-
-class CustomUserCreationForm(UserCreationForm):
-    email = forms.EmailField(required=True)
-    skill_level = forms.ChoiceField(choices=User.SKILL_LEVEL)
-
-    class Meta(UserCreationForm.Meta):
-        model = User
-        fields = ['name', 'email', 'skill_level']

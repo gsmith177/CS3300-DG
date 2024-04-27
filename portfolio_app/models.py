@@ -6,31 +6,9 @@ from django.utils.translation import gettext as _
 from django.contrib.auth.models import Permission
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin, Group
 
-class CustomUserManager(BaseUserManager):
-    def create_user(self, email, name, password=None, skill_level=None, **extra_fields):
-        if not email:
-            raise ValueError('The Email field must be set')
-        email = self.normalize_email(email)
-        user = self.model(email=email, name=name, skill_level=skill_level, **extra_fields)
-        if password:
-            user.set_password(password)
-        user.save(using=self._db)
-        return user
-
-    def create_superuser(self, email, name, password=None, skill_level=None, **extra_fields):
-        extra_fields.setdefault('is_staff', True)
-        extra_fields.setdefault('is_superuser', True)
-
-        if extra_fields.get('is_staff') is not True:
-            raise ValueError('Superuser must have is_staff=True.')
-        if extra_fields.get('is_superuser') is not True:
-            raise ValueError('Superuser must have is_superuser=True.')
-
-        return self.create_user(email, name, password, skill_level, **extra_fields)
-
 
 class User(AbstractBaseUser, PermissionsMixin):
-    name = models.CharField("name", max_length=200)
+    username = models.CharField(('username'), max_length=150, default="default_username", unique=True)
     email = models.EmailField(('email address'), unique=True)
     is_active = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
@@ -41,13 +19,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     )
     skill_level = models.CharField(max_length=200, choices=SKILL_LEVEL, blank=False)
     date_joined = models.DateField(("Date"), default=date.today)
-
-    password = models.CharField(max_length=128, default='')
-
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
-
-    objects = CustomUserManager()
 
     # Define custom related names for groups and user_permissions
     groups = models.ManyToManyField(
